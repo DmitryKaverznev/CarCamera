@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CarCamera</string>
+    <string name="text_title_login">Вход</string>
+    <string name="input_username">Имя пользователя</string>
+    <string name="input_password">Пароль</string>
+    <string name="button_description_setting">Настройки</string>
+    <string name="button_text_login">Войти</string>
+    <string name="button_text_goRegister">Регестрация</string>
+</resources>
