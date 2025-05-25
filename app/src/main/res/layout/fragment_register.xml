@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.LoginFragment">
+    tools:context=".views.RegisterFragment">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_login"
+        android:id="@+id/card_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
@@ -25,23 +25,23 @@
             android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/textView_login_title"
+                android:id="@+id/textView_register_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_title_login"
+                android:text="@string/text_title_register"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="32dp" />
 
             <EditText
-                android:id="@+id/editText_username"
+                android:id="@+id/editText_reg_username"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:autofillHints=""
                 android:hint="@string/input_username"
                 android:inputType="text"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:layout_marginBottom="16dp" />
 
             <EditText
                 android:id="@+id/editText_password"
@@ -51,23 +51,34 @@
                 android:hint="@string/input_password"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
+                android:layout_marginBottom="16dp" />
+
+            <EditText
+                android:id="@+id/editText_confirm_password"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/input_confirm_password"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
                 android:layout_marginBottom="32dp" />
 
             <Button
-                android:id="@+id/button_login"
+                android:id="@+id/button_register"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:text="@string/button_text_login" />
+                android:text="@string/button_text_register" />
 
             <TextView
-                android:id="@+id/textView_register"
+                android:id="@+id/textView_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:minWidth="48dp"
                 android:minHeight="48dp"
-                android:text="@string/button_text_goRegister"
+                android:text="@string/button_text_goLogin"
                 android:textAppearance="?attr/textAppearanceBodySmall" />
 
         </LinearLayout>

@@ -6,4 +6,9 @@
     <string name="button_description_setting">Настройки</string>
     <string name="button_text_login">Войти</string>
     <string name="button_text_goRegister">Регестрация</string>
+    <string name="text_title_register">Регестрация</string>
+    <string name="input_confirm_password">Подтверждние пароля</string>
+    <string name="button_text_register">Зарегистрироваться</string>
+    <string name="button_text_goLogin">Вход</string>
+    <string name="text_title_welcome">Добро пожаловать!</string>
 </resources>

@@ -3,4 +3,11 @@
     <string name="text_title_login">Log in</string>
     <string name="input_username">Username</string>
     <string name="input_password">Password</string>
+    <string name="button_description_setting">Settings</string>
+    <string name="button_text_login">Log in</string>
+    <string name="button_text_goRegister">Register</string>
+    <string name="text_title_register">Register</string>
+    <string name="input_confirm_password">Confirm password</string>
+    <string name="button_text_register">Register</string>
+    <string name="button_text_goLogin">Log in</string>
 </resources>

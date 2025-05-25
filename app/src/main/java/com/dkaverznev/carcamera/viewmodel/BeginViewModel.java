@@ -2,7 +2,7 @@ package com.dkaverznev.carcamera.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-public class LoginViewModel extends ViewModel {
+public class BeginViewModel extends ViewModel {
 
 
 }
