@@ -11,6 +11,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+// import androidx.navigation.ui.NavigationUI; // Больше не нужен для setupActionBarWithNavController
+// import androidx.appcompat.widget.Toolbar; // Больше не нужен
 
 import com.dkaverznev.carcamera.R;
 import com.dkaverznev.carcamera.databinding.ActivityMainBinding;
@@ -26,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
             appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         }
     }
 

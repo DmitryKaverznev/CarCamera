@@ -1,0 +1,13 @@
+<resources>
+    <style name="ShapeAppearance.App.ButtonLeft" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">8dp</item> <item name="cornerSizeBottomLeft">8dp</item> </style>
+
+    <style name="ShapeAppearance.App.ButtonRight" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeTopRight">8dp</item> <item name="cornerSizeBottomRight">8dp</item> </style>
+</resources>

@@ -12,15 +12,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.dkaverznev.carcamera.databinding.FragmentBeginBinding;
-import com.dkaverznev.carcamera.databinding.FragmentSettingsBinding;
-import com.dkaverznev.carcamera.viewmodel.BeginViewModel;
-import com.dkaverznev.carcamera.viewmodel.SettingViewModel;
+import com.dkaverznev.carcamera.R;
+import com.dkaverznev.carcamera.databinding.FragmentHomeBinding;
+import com.dkaverznev.carcamera.viewmodel.HomeViewModel;
 
-public class SettingFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private SettingViewModel mViewModel;
-    private FragmentSettingsBinding binding;
+    private HomeViewModel mViewModel;
+    private FragmentHomeBinding binding;
     private NavController navController;
 
 
@@ -29,7 +28,7 @@ public class SettingFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -37,7 +36,7 @@ public class SettingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this).get(SettingViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         navController = Navigation.findNavController(view);
 
         initUI();
@@ -45,8 +44,8 @@ public class SettingFragment extends Fragment {
     }
 
     private void initUI() {
-        binding.buttonBack.setOnClickListener(v-> {
-            navController.navigateUp();
+        binding.buttonSettings.setOnClickListener(v->{
+            navController.navigate(R.id.action_settingHome_to_settingFragment);
         });
     }
 

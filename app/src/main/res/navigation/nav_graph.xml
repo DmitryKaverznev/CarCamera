@@ -36,6 +36,9 @@
             app:destination="@id/settingFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_settingHome"
+            app:destination="@id/settingHome" />
     </fragment>
 
 
@@ -53,8 +56,20 @@
             app:destination="@id/settingFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registerFragment_to_settingHome"
+            app:destination="@id/settingHome" />
     </fragment>
 
+    <fragment
+        android:id="@+id/settingHome"
+        android:name="com.dkaverznev.carcamera.views.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_settingHome_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingFragment"

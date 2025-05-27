@@ -4,21 +4,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import com.dkaverznev.carcamera.databinding.FragmentLoginBinding;
+import com.dkaverznev.carcamera.R;
 import com.dkaverznev.carcamera.databinding.FragmentRegisterBinding;
-import com.dkaverznev.carcamera.viewmodel.LoginViewModel;
 import com.dkaverznev.carcamera.viewmodel.RegisterViewModel;
 
 public class RegisterFragment extends Fragment {
 
     private RegisterViewModel mViewModel;
     private FragmentRegisterBinding binding;
+    private NavController navController;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,17 +37,39 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        navController = Navigation.findNavController(view);
 
         initUI();
         setupObservers();
     }
 
     private void initUI() {
-        // TODO
+        binding.buttonSettings.setOnClickListener(v->
+                navController.navigate(R.id.action_registerFragment_to_settingFragment));
+
+        binding.buttonRegister.setOnClickListener(v -> {
+            String userName = binding.editTextUsername.getText().toString();
+            String password = binding.editTextPassword.getText().toString();
+            String confirmPassword = binding.editTextConfirmPassword.getText().toString();
+            mViewModel.register(userName, password, confirmPassword);
+        });
+
+        binding.textViewLogin.setOnClickListener(v->
+                navController.navigate(R.id.action_registerFragment_to_loginFragment));
     }
 
     private void setupObservers() {
-        // TODO
+        mViewModel.registerSuccess.observe(getViewLifecycleOwner(), success -> {
+            if (success) {
+                Toast.makeText(getContext(), "Вход выполнен успешно!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mViewModel.errorMessage.observe(getViewLifecycleOwner(), message -> {
+            if (message != null && !message.isEmpty()) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

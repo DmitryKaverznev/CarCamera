@@ -13,7 +13,7 @@
         android:theme="@style/Theme.CarCamera"
         tools:targetApi="31">
         <activity
-            android:name="com.dkaverznev.carcamera.views.MainActivity"
+            android:name=".views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

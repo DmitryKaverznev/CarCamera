@@ -36,7 +36,6 @@ public class BeginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(BeginViewModel.class);
-
         navController = Navigation.findNavController(view);
 
         initUI();
