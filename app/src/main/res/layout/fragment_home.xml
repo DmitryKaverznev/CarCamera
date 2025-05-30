@@ -47,6 +47,20 @@
         tools:listitem="@layout/item_scan_history" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_manualInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/button_description_manualinput"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_dialpad"
+        app:layout_constraintBottom_toTopOf="@+id/fab_scan"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

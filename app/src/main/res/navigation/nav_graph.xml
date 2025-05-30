@@ -17,8 +17,8 @@
             android:id="@+id/action_beginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_beginFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+            android:id="@+id/action_beginFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
 
@@ -32,13 +32,11 @@
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_settingFragment"
-            app:destination="@id/settingFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_loginFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_settingHome"
-            app:destination="@id/settingHome" />
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 
@@ -52,29 +50,28 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_registerFragment_to_settingFragment"
-            app:destination="@id/settingFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_registerFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_registerFragment_to_settingHome"
-            app:destination="@id/settingHome" />
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/settingHome"
-        android:name="com.dkaverznev.carcamera.views.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_settingHome_to_settingFragment"
-            app:destination="@id/settingFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/settingFragment"
+        android:id="@+id/settingsFragment"
         android:name="com.dkaverznev.carcamera.views.SettingFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.dkaverznev.carcamera.views.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 
 </navigation>

@@ -12,9 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.dkaverznev.carcamera.databinding.FragmentBeginBinding;
 import com.dkaverznev.carcamera.databinding.FragmentSettingsBinding;
-import com.dkaverznev.carcamera.viewmodel.BeginViewModel;
 import com.dkaverznev.carcamera.viewmodel.SettingViewModel;
 
 public class SettingFragment extends Fragment {

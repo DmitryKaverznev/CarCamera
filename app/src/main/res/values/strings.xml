@@ -30,4 +30,6 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="button_description_manualinput">Ручной ввод</string>
+    <string name="text_permission_camera">разрешение камеры не предоставлено</string>
 </resources>

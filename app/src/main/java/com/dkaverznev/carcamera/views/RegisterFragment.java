@@ -45,7 +45,10 @@ public class RegisterFragment extends Fragment {
 
     private void initUI() {
         binding.buttonSettings.setOnClickListener(v->
-                navController.navigate(R.id.action_registerFragment_to_settingFragment));
+                navController.navigate(R.id.action_homeFragment_to_settingsFragment));
+
+        binding.buttonBack.setOnClickListener(v ->
+                navController.navigateUp());
 
         binding.buttonRegister.setOnClickListener(v -> {
             String userName = binding.editTextUsername.getText().toString();
@@ -61,7 +64,7 @@ public class RegisterFragment extends Fragment {
     private void setupObservers() {
         mViewModel.registerSuccess.observe(getViewLifecycleOwner(), success -> {
             if (success) {
-                Toast.makeText(getContext(), "Вход выполнен успешно!", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.action_registerFragment_to_homeFragment);
             }
         });
 

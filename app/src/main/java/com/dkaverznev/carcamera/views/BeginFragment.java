@@ -52,7 +52,7 @@ public class BeginFragment extends Fragment {
         });
 
         binding.buttonSettings.setOnClickListener(v -> {
-            navController.navigate(R.id.action_beginFragment_to_settingFragment);
+            navController.navigate(R.id.action_beginFragment_to_settingsFragment);
         });
     }
 

@@ -44,9 +44,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void initUI() {
-        binding.buttonSettings.setOnClickListener(v->{
-            navController.navigate(R.id.action_settingHome_to_settingFragment);
-        });
+        binding.buttonSettings.setOnClickListener(v->
+                navController.navigate(R.id.action_homeFragment_to_settingsFragment));
     }
 
     private void setupObservers() {

@@ -47,6 +47,9 @@ public class LoginFragment extends Fragment {
         binding.buttonBack.setOnClickListener(v ->
                 navController.navigateUp());
 
+        binding.buttonSettings.setOnClickListener(v->
+                navController.navigate(R.id.action_homeFragment_to_settingsFragment));
+
         binding.buttonLogin.setOnClickListener(v -> {
             String userName = binding.editTextUsername.getText().toString();
             String password = binding.editTextPassword.getText().toString();
@@ -60,7 +63,7 @@ public class LoginFragment extends Fragment {
     private void setupObservers() {
         mViewModel.loginSuccess.observe(getViewLifecycleOwner(), success -> {
             if (success) {
-                Toast.makeText(getContext(), "Вход выполнен успешно!", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.action_loginFragment_to_homeFragment);
             }
         });
 

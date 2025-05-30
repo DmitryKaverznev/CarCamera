@@ -1,5 +1,6 @@
 [versions]
 agp = "8.9.1"
+cameraCamera2 = "1.4.2"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -13,8 +14,12 @@ lifecycleViewmodelKtx = "2.6.1"
 navigationFragment = "2.9.0"
 preference = "1.2.0"
 securityCrypto = "1.1.0-alpha07"
+textRecognition = "16.0.1"
 
 [libraries]
+camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
+camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraCamera2" }
+camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraCamera2" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -29,6 +34,7 @@ navigation-fragment = { module = "androidx.navigation:navigation-fragment", vers
 navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationFragment" }
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "textRecognition" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
