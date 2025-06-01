@@ -46,6 +46,10 @@ public class HomeFragment extends Fragment {
     private void initUI() {
         binding.buttonSettings.setOnClickListener(v->
                 navController.navigate(R.id.action_homeFragment_to_settingsFragment));
+
+        binding.fabScan.setOnClickListener(v->{
+            navController.navigate(R.id.action_homeFragment_to_scanFragment);
+        });
     }
 
     private void setupObservers() {

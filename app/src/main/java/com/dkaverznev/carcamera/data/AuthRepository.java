@@ -1,37 +1,57 @@
-// AuthRepository.java
 package com.dkaverznev.carcamera.data;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import androidx.lifecycle.MutableLiveData;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class AuthRepository {
 
-    private static final String PREF_NAME = "auth_prefs";
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_PASSWORD = "password";
+    private final FirebaseAuth firebaseAuth;
+    private final MutableLiveData<FirebaseUser> _firebaseUser = new MutableLiveData<>();
+    public MutableLiveData<FirebaseUser> firebaseUser = _firebaseUser;
 
-    private final SharedPreferences sharedPreferences;
+    private final MutableLiveData<String> _authErrorMessage = new MutableLiveData<>();
+    public MutableLiveData<String> authErrorMessage = _authErrorMessage;
 
-    public AuthRepository(Context context) {
-        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    public AuthRepository() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        _firebaseUser.setValue(firebaseAuth.getCurrentUser());
     }
 
-    public void saveUser(String email, String password) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_EMAIL, email);
-        editor.putString(KEY_PASSWORD, password);
-        editor.apply();
+    public void registerUser(String email, String password) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        _firebaseUser.setValue(firebaseAuth.getCurrentUser());
+                        _authErrorMessage.setValue(null);
+                    } else {
+                        _authErrorMessage.setValue(Objects.requireNonNull(task.getException()).getMessage());
+                        _firebaseUser.setValue(null);
+                    }
+                });
     }
 
-    public String getStoredEmail() {
-        return sharedPreferences.getString(KEY_EMAIL, null);
+    public void loginUser(String email, String password) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        _firebaseUser.setValue(firebaseAuth.getCurrentUser());
+                        _authErrorMessage.setValue(null);
+                    } else {
+                        _authErrorMessage.setValue(Objects.requireNonNull(task.getException()).getMessage());
+                        _firebaseUser.setValue(null);
+                    }
+                });
     }
 
-    public String getStoredPassword() {
-        return sharedPreferences.getString(KEY_PASSWORD, null);
+    public boolean isUserLoggedIn() {
+        return firebaseAuth.getCurrentUser() != null;
     }
 
-    public boolean isUserRegistered() {
-        return sharedPreferences.contains(KEY_EMAIL);
+    public void logoutUser() {
+        firebaseAuth.signOut();
+        _firebaseUser.setValue(null);
     }
 }

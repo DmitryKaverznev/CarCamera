@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "344697018796",
+    "project_id": "carpass-dkaverznev",
+    "storage_bucket": "carpass-dkaverznev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344697018796:android:46720605911548805e4209",
+        "android_client_info": {
+          "package_name": "com.dkaverznev.carcamera"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqUKwxTRek_zmgBgRWN2WypxKgi7stU8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

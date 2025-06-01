@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CarCamera</string>
     <string name="text_title_login">Вход</string>
-    <string name="input_username">Имя пользователя</string>
+    <string name="input_email">Имя пользователя</string>
     <string name="input_password">Пароль</string>
     <string name="button_description_setting">Настройки</string>
     <string name="button_text_login">Войти</string>
@@ -12,24 +12,15 @@
     <string name="button_text_goLogin">Вход</string>
     <string name="text_title_welcome">Добро пожаловать!</string>
     <string name="button_description_back">Назад</string>
-    <string name="button_description_scan">Скарировать\n</string>
+    <string name="button_description_scan">"Скарировать "</string>
     <string name="text_title_home">Главная</string>
     <string name="text_licensePlate">Номер машины</string>
     <string name="text_shortInfo">Краткая информация</string>
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="button_description_manualinput">Ручной ввод</string>
-    <string name="text_permission_camera">разрешение камеры не предоставлено</string>
+    <string name="text_permission_camera">Не предоставлено разрешение камеры</string>
 </resources>

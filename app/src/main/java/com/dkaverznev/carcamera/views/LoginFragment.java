@@ -51,7 +51,7 @@ public class LoginFragment extends Fragment {
                 navController.navigate(R.id.action_homeFragment_to_settingsFragment));
 
         binding.buttonLogin.setOnClickListener(v -> {
-            String userName = binding.editTextUsername.getText().toString();
+            String userName = binding.editTextEmail.getText().toString();
             String password = binding.editTextPassword.getText().toString();
             mViewModel.login(userName, password);
         });

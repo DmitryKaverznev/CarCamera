@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.dkaverznev.carcamera.R; // Убедитесь, что у вас есть R файл
 import com.dkaverznev.carcamera.databinding.FragmentSettingsBinding;
 import com.dkaverznev.carcamera.viewmodel.SettingViewModel;
 
@@ -21,12 +23,10 @@ public class SettingFragment extends Fragment {
     private FragmentSettingsBinding binding;
     private NavController navController;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -43,13 +43,28 @@ public class SettingFragment extends Fragment {
     }
 
     private void initUI() {
-        binding.buttonBack.setOnClickListener(v-> {
+        binding.buttonBack.setOnClickListener(v -> {
             navController.navigateUp();
+        });
+
+        binding.buttonLogout.setOnClickListener(v -> {
+            mViewModel.logOut();
         });
     }
 
     private void setupObservers() {
-        // TODO
+        mViewModel.logoutSuccess.observe(getViewLifecycleOwner(), success -> {
+            if (success != null && success) {
+                Toast.makeText(getContext(), "Вы успешно вышли из аккаунта.", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.loginFragment);
+            }
+        });
+
+        mViewModel.errorMessage.observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Toast.makeText(getContext(), "Ошибка выхода: " + message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

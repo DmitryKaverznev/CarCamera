@@ -27,6 +27,6 @@ public class ScanViewModel extends AndroidViewModel {
     }
 
     public void scan(InputImage image) {
-        scanRepository.scan(image); // Передаем в репозиторий
+        scanRepository.scan(image);
     }
 }
