@@ -23,4 +23,5 @@
     <!-- Sync Preferences -->
     <string name="button_description_manualinput">Ручной ввод</string>
     <string name="text_permission_camera">Не предоставлено разрешение камеры</string>
+    <string name="text_scanning_in_progress">Сканирование...</string>
 </resources>
