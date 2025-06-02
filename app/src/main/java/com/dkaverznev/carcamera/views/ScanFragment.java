@@ -33,9 +33,6 @@ import com.dkaverznev.carcamera.R;
 import com.dkaverznev.carcamera.databinding.FragmentScanBinding;
 import com.dkaverznev.carcamera.viewmodel.ScanViewModel;
 import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.text.TextRecognition;
-import com.google.mlkit.vision.text.TextRecognizer;
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -48,7 +45,6 @@ public class ScanFragment extends Fragment {
     private FragmentScanBinding binding;
     private NavController navController;
     private ExecutorService cameraExecutor;
-    private TextRecognizer textRecognizer;
 
     private final AtomicBoolean isProcessingImage = new AtomicBoolean(false);
 
@@ -67,8 +63,6 @@ public class ScanFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(ScanViewModel.class);
         navController = Navigation.findNavController(view);
         cameraExecutor = Executors.newSingleThreadExecutor();
-
-        textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
 
         ActivityResultLauncher<String> requestCameraPermissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
@@ -93,31 +87,32 @@ public class ScanFragment extends Fragment {
     }
 
     private void initUI() {
+        binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
     }
 
     private void setupObservers() {
-        mViewModel.scanSuccess.observe(getViewLifecycleOwner(), success -> {
-            if (success != null) {
-                if (success) {
-                    Toast.makeText(getContext(), "Сканирование успешно!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Сканирование не удалось.", Toast.LENGTH_SHORT).show();
-                }
+        mViewModel.scannedText.observe(getViewLifecycleOwner(), text -> {
+            if (text != null && !text.isEmpty()) {
+                binding.scannedTextView.setText(text);
+                binding.errorTextView.setText("");
                 isProcessingImage.set(false);
+                Log.d("ScanFragment", "Успешно распознан текст: " + text);
             }
         });
 
-        mViewModel.errorMessage.observe(getViewLifecycleOwner(), errorMessage -> {
+        mViewModel.scanErrorMessage.observe(getViewLifecycleOwner(), errorMessage -> {
             if (errorMessage != null && !errorMessage.isEmpty()) {
+                binding.errorTextView.setText(errorMessage);
+                binding.scannedTextView.setText("");
                 Toast.makeText(getContext(), "Ошибка: " + errorMessage, Toast.LENGTH_LONG).show();
                 isProcessingImage.set(false);
+                Log.e("ScanFragment", "Получена ошибка сканирования: " + errorMessage);
+            } else {
+                binding.errorTextView.setText("");
             }
         });
     }
 
-    /**
-     * Запускает камеру и привязывает её к жизненному циклу фрагмента.
-     */
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
 
@@ -145,6 +140,7 @@ public class ScanFragment extends Fragment {
                         }
 
                         isProcessingImage.set(true);
+                        Log.d("ScanFragment", "Начата обработка нового кадра.");
 
                         @Nullable InputImage inputImage;
                         try {
@@ -153,14 +149,13 @@ public class ScanFragment extends Fragment {
                                     imageProxy.getImageInfo().getRotationDegrees()
                             );
                         } catch (Exception e) {
+                            Log.e("ScanFragment", "Ошибка создания InputImage: " + e.getMessage(), e);
                             isProcessingImage.set(false);
                             imageProxy.close();
                             return;
                         }
 
-                        mViewModel.scan(inputImage);
-
-                        imageProxy.close();
+                        mViewModel.startTextScan(inputImage, imageProxy);
                     }
                 });
 
@@ -183,9 +178,7 @@ public class ScanFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (textRecognizer != null) {
-            textRecognizer.close();
-        }
+
         if (cameraExecutor != null) {
             cameraExecutor.shutdown();
         }

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CarCamera</string>
     <string name="text_title_login">Log in</string>
-    <string name="input_email">Username</string>
+    <string name="input_email">Email</string>
     <string name="input_password">Password</string>
     <string name="button_description_setting">Settings</string>
     <string name="button_text_login">Log in</string>
@@ -18,4 +18,5 @@
     <string name="text_shortInfo">Short info</string>
     <string name="button_description_manualinput">Manual Input</string>
     <string name="text_permission_camera">Camera permission not provided</string>
+    <string name="text_scanning_in_progress">Scanning...</string>
 </resources>

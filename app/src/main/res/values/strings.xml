@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CarCamera</string>
     <string name="text_title_login">Вход</string>
-    <string name="input_email">Имя пользователя</string>
+    <string name="input_email">Электронная почта</string>
     <string name="input_password">Пароль</string>
     <string name="button_description_setting">Настройки</string>
     <string name="button_text_login">Войти</string>
@@ -23,4 +23,5 @@
     <!-- Sync Preferences -->
     <string name="button_description_manualinput">Ручной ввод</string>
     <string name="text_permission_camera">Не предоставлено разрешение камеры</string>
+    <string name="text_scanning_in_progress">Сканирование...</string>
 </resources>

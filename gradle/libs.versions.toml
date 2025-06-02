@@ -16,6 +16,7 @@ navigationFragment = "2.9.0"
 preference = "1.2.0"
 securityCrypto = "1.1.0-alpha07"
 textRecognition = "16.0.1"
+firebaseFirestore = "25.1.4"
 
 [libraries]
 camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
@@ -39,6 +40,7 @@ navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "n
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "textRecognition" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
