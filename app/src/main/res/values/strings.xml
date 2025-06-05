@@ -5,8 +5,8 @@
     <string name="input_password">Пароль</string>
     <string name="button_description_setting">Настройки</string>
     <string name="button_text_login">Войти</string>
-    <string name="button_text_goRegister">Регестрация</string>
-    <string name="text_title_register">Регестрация</string>
+    <string name="button_text_goRegister">Регистрация</string>
+    <string name="text_title_register">Регистрация</string>
     <string name="input_confirm_password">Подтверждние пароля</string>
     <string name="button_text_register">Зарегистрироваться</string>
     <string name="button_text_goLogin">Вход</string>
@@ -24,4 +24,9 @@
     <string name="button_description_manualinput">Ручной ввод</string>
     <string name="text_permission_camera">Не предоставлено разрешение камеры</string>
     <string name="text_scanning_in_progress">Сканирование...</string>
+    <string name="text_title_result">Результат</string>
+    <string name="button_description_refresh">Продолжить сканирование</string>
+    <string name="rus" translatable="false">RUS</string>
+    <string name="image_description_flag">Флаг РФ</string>
+    <string name="text_vehicle_not_found">Номер не найден</string>
 </resources>

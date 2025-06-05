@@ -72,4 +72,46 @@ public class LicensePlateStringUtils {
         }
         return null;
     }
+
+    // --- Новая функция разбиения номера ---
+
+    /**
+     * Вспомогательный класс для хранения основной части номера и кода региона.
+     */
+    public static class LicensePlateParts {
+        public final String numberPart;
+        public final String regionPart; // Может быть null, если регион не найден
+
+        public LicensePlateParts(String numberPart, String regionPart) {
+            this.numberPart = numberPart;
+            this.regionPart = regionPart;
+        }
+    }
+
+    /**
+     * Разделяет полный номерной знак на основную часть и код региона.
+     * Регион определяется как последние 2 или 3 цифры.
+     *
+     * @param fullLicensePlate Полный номерной знак (например, "X481AT178", "A123BC22", "X481AT").
+     * @return Объект LicensePlateParts, содержащий основную часть номера и код региона.
+     * Код региона может быть null, если не найден.
+     */
+    public static LicensePlateParts splitLicensePlate(String fullLicensePlate) {
+        if (fullLicensePlate == null || fullLicensePlate.isEmpty()) {
+            return new LicensePlateParts("", null);
+        }
+
+        // Паттерн для поиска региона: 2 или 3 цифры в конце строки
+        Pattern regionPattern = Pattern.compile("(\\d{3}|\\d{2})$");
+        Matcher matcher = regionPattern.matcher(fullLicensePlate);
+
+        if (matcher.find()) {
+            String region = matcher.group(1); // Группа 1 содержит найденный регион (2 или 3 цифры)
+            String number = fullLicensePlate.substring(0, fullLicensePlate.length() - region.length());
+            return new LicensePlateParts(number, region);
+        } else {
+            // Если регион не найден (номер не оканчивается на 2 или 3 цифры)
+            return new LicensePlateParts(fullLicensePlate, null);
+        }
+    }
 }

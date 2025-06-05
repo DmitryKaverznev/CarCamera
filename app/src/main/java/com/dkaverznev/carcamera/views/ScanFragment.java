@@ -97,6 +97,10 @@ public class ScanFragment extends Fragment {
                 binding.errorTextView.setText("");
                 isProcessingImage.set(false);
                 Log.d("ScanFragment", "Успешно распознан текст: " + text);
+
+                ScanFragmentDirections.ActionScanFragmentToResultFragment action =
+                        ScanFragmentDirections.actionScanFragmentToResultFragment(text);
+                navController.navigate(action);
             }
         });
 

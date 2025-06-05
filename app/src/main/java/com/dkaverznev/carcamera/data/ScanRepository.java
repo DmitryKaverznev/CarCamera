@@ -44,7 +44,6 @@ public class ScanRepository {
                         _scannedText.postValue(foundLicensePlate);
                         Log.d("ScanRepository", "Найден строгий номерной знак: " + foundLicensePlate);
                     } else {
-                        _scannedText.postValue("(" + rawScannedText + ")");
                         Log.d("ScanRepository", "Строгий номерной знак НЕ найден, сохраняем сырой текст: (" + rawScannedText + ")");
                     }
 

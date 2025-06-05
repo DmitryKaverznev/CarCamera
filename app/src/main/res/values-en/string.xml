@@ -19,4 +19,8 @@
     <string name="button_description_manualinput">Manual Input</string>
     <string name="text_permission_camera">Camera permission not provided</string>
     <string name="text_scanning_in_progress">Scanning...</string>
+    <string name="text_title_result">Result</string>
+    <string name="button_description_refresh">Continue scanning</string>
+    <string name="image_description_flag">RUS Flag</string>
+    <string name="text_vehicle_not_found">Plate License not found</string>
 </resources>
