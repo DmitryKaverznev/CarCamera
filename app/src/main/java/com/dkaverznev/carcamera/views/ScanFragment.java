@@ -1,3 +1,4 @@
+// ScanFragment.java
 package com.dkaverznev.carcamera.views;
 
 import android.os.Bundle;
@@ -37,7 +38,6 @@ import com.google.mlkit.vision.common.InputImage;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScanFragment extends Fragment {
 
@@ -51,7 +51,6 @@ public class ScanFragment extends Fragment {
     private Preview preview;
     private ImageAnalysis imageAnalysis;
 
-    private final AtomicBoolean isProcessingImage = new AtomicBoolean(false);
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -113,7 +112,6 @@ public class ScanFragment extends Fragment {
             if (text != null && !text.isEmpty()) {
                 binding.scannedTextView.setText(text);
                 binding.errorTextView.setText("");
-                isProcessingImage.set(false);
 
                 binding.fabScan.setVisibility(View.VISIBLE);
 
@@ -121,8 +119,8 @@ public class ScanFragment extends Fragment {
                         ScanFragmentDirections.actionScanFragmentToResultFragment(text);
                 navController.navigate(action);
 
-                // Очищаем scannedText в ViewModel после навигации
                 mViewModel.clearScannedText();
+
 
                 if (cameraProvider != null) {
                     cameraProvider.unbind(imageAnalysis);
@@ -139,7 +137,6 @@ public class ScanFragment extends Fragment {
                 binding.errorTextView.setText(errorMessage);
                 binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
                 Toast.makeText(getContext(), "Ошибка: " + errorMessage, Toast.LENGTH_LONG).show();
-                isProcessingImage.set(false);
                 binding.fabScan.setVisibility(View.GONE);
             } else {
                 binding.errorTextView.setText("");
@@ -179,14 +176,6 @@ public class ScanFragment extends Fragment {
                             return;
                         }
 
-                        if (isProcessingImage.get()) {
-                            imageProxy.close();
-                            return;
-                        }
-
-                        isProcessingImage.set(true);
-                        Log.d("ScanFragment", "Начата обработка нового кадра.");
-
                         @Nullable InputImage inputImage;
                         try {
                             inputImage = InputImage.fromMediaImage(
@@ -195,7 +184,6 @@ public class ScanFragment extends Fragment {
                             );
                         } catch (Exception e) {
                             Log.e("ScanFragment", "Ошибка создания InputImage: " + e.getMessage(), e);
-                            isProcessingImage.set(false);
                             imageProxy.close();
                             return;
                         }
