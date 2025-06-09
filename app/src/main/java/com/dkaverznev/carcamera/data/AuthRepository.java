@@ -1,47 +1,61 @@
 package com.dkaverznev.carcamera.data;
 
-import androidx.lifecycle.MutableLiveData;
+import android.app.Application;
+import android.content.Context;
+
+import com.dkaverznev.carcamera.R;
+import com.dkaverznev.carcamera.utils.ErrorFirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Objects;
+import androidx.lifecycle.MutableLiveData;
 
 public class AuthRepository {
 
     private final FirebaseAuth firebaseAuth;
-    private final MutableLiveData<FirebaseUser> _firebaseUser = new MutableLiveData<>();
-    public MutableLiveData<FirebaseUser> firebaseUser = _firebaseUser;
+    public final MutableLiveData<FirebaseUser> firebaseUser = new MutableLiveData<>();
 
-    private final MutableLiveData<String> _authErrorMessage = new MutableLiveData<>();
-    public MutableLiveData<String> authErrorMessage = _authErrorMessage;
+    public final MutableLiveData<String> authErrorMessage = new MutableLiveData<>();
+    private final Context applicationContext;
 
-    public AuthRepository() {
+    // Конструктор теперь принимает Application
+    public AuthRepository(Application application) {
         firebaseAuth = FirebaseAuth.getInstance();
-        _firebaseUser.setValue(firebaseAuth.getCurrentUser());
+        firebaseUser.setValue(firebaseAuth.getCurrentUser());
+        this.applicationContext = application.getApplicationContext();
     }
 
     public void registerUser(String email, String password) {
+        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            authErrorMessage.postValue(applicationContext.getString(R.string.error_empty_credentials));
+            return;
+        }
+
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        _firebaseUser.setValue(firebaseAuth.getCurrentUser());
-                        _authErrorMessage.setValue(null);
+                        firebaseUser.setValue(firebaseAuth.getCurrentUser());
+                        authErrorMessage.setValue(null);
                     } else {
-                        _authErrorMessage.setValue(Objects.requireNonNull(task.getException()).getMessage());
-                        _firebaseUser.setValue(null);
+                        handleAuthError(task.getException());
                     }
                 });
     }
 
     public void loginUser(String email, String password) {
+        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            authErrorMessage.postValue(applicationContext.getString(R.string.error_empty_credentials));
+            return;
+        }
+
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        _firebaseUser.setValue(firebaseAuth.getCurrentUser());
-                        _authErrorMessage.setValue(null);
+                        firebaseUser.setValue(firebaseAuth.getCurrentUser());
+                        authErrorMessage.setValue(null);
                     } else {
-                        _authErrorMessage.setValue(Objects.requireNonNull(task.getException()).getMessage());
-                        _firebaseUser.setValue(null);
+                        handleAuthError(task.getException());
                     }
                 });
     }
@@ -52,6 +66,20 @@ public class AuthRepository {
 
     public void logoutUser() {
         firebaseAuth.signOut();
-        _firebaseUser.setValue(null);
+        firebaseUser.setValue(null);
+    }
+
+    private void handleAuthError(Exception exception) {
+        String errorMessageText = applicationContext.getString(R.string.error_unknown);
+
+        if (exception instanceof FirebaseAuthException) {
+            FirebaseAuthException authException = (FirebaseAuthException) exception;
+            String errorCode = authException.getErrorCode();
+            errorMessageText = applicationContext.getString(ErrorFirebaseUtils.getString(errorCode));
+        } else if (exception != null && exception.getMessage() != null && !exception.getMessage().isEmpty()) {
+            errorMessageText = applicationContext.getString(R.string.error_generic);
+        }
+
+        authErrorMessage.postValue(errorMessageText);
     }
 }

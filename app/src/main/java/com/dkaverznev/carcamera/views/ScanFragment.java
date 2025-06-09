@@ -46,6 +46,11 @@ public class ScanFragment extends Fragment {
     private NavController navController;
     private ExecutorService cameraExecutor;
 
+    private ProcessCameraProvider cameraProvider;
+    private CameraSelector cameraSelector;
+    private Preview preview;
+    private ImageAnalysis imageAnalysis;
+
     private final AtomicBoolean isProcessingImage = new AtomicBoolean(false);
 
     @Override
@@ -88,6 +93,19 @@ public class ScanFragment extends Fragment {
 
     private void initUI() {
         binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
+
+        binding.buttonBack.setOnClickListener(v->
+                navController.navigateUp());
+
+        binding.fabScan.setOnClickListener(v -> {
+            binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
+            binding.fabScan.setVisibility(View.GONE);
+            binding.errorTextView.setText("");
+            if (cameraProvider != null) {
+                cameraProvider.unbindAll();
+            }
+            startCamera();
+        });
     }
 
     private void setupObservers() {
@@ -96,21 +114,33 @@ public class ScanFragment extends Fragment {
                 binding.scannedTextView.setText(text);
                 binding.errorTextView.setText("");
                 isProcessingImage.set(false);
-                Log.d("ScanFragment", "Успешно распознан текст: " + text);
+
+                binding.fabScan.setVisibility(View.VISIBLE);
 
                 ScanFragmentDirections.ActionScanFragmentToResultFragment action =
                         ScanFragmentDirections.actionScanFragmentToResultFragment(text);
                 navController.navigate(action);
+
+                // Очищаем scannedText в ViewModel после навигации
+                mViewModel.clearScannedText();
+
+                if (cameraProvider != null) {
+                    cameraProvider.unbind(imageAnalysis);
+                }
+
+            } else {
+                binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
+                binding.fabScan.setVisibility(View.GONE);
             }
         });
 
         mViewModel.scanErrorMessage.observe(getViewLifecycleOwner(), errorMessage -> {
             if (errorMessage != null && !errorMessage.isEmpty()) {
                 binding.errorTextView.setText(errorMessage);
-                binding.scannedTextView.setText("");
+                binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
                 Toast.makeText(getContext(), "Ошибка: " + errorMessage, Toast.LENGTH_LONG).show();
                 isProcessingImage.set(false);
-                Log.e("ScanFragment", "Получена ошибка сканирования: " + errorMessage);
+                binding.fabScan.setVisibility(View.GONE);
             } else {
                 binding.errorTextView.setText("");
             }
@@ -122,15 +152,20 @@ public class ScanFragment extends Fragment {
 
         cameraProviderFuture.addListener(() -> {
             try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                this.cameraProvider = cameraProviderFuture.get();
 
-                Preview preview = new Preview.Builder()
+                if (binding == null) {
+                    Log.w("ScanFragment", "Binding is null, fragment view probably destroyed. Cannot start camera.");
+                    return;
+                }
+
+                this.preview = new Preview.Builder()
                         .build();
                 preview.setSurfaceProvider(binding.previewView.getSurfaceProvider());
 
-                CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
+                this.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
 
-                ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
+                this.imageAnalysis = new ImageAnalysis.Builder()
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .build();
 
@@ -138,6 +173,12 @@ public class ScanFragment extends Fragment {
                     @OptIn(markerClass = ExperimentalGetImage.class)
                     @Override
                     public void analyze(@NonNull ImageProxy imageProxy) {
+
+                        if (mViewModel.scannedText.getValue() != null && !mViewModel.scannedText.getValue().isEmpty()) {
+                            imageProxy.close();
+                            return;
+                        }
+
                         if (isProcessingImage.get()) {
                             imageProxy.close();
                             return;
@@ -174,7 +215,7 @@ public class ScanFragment extends Fragment {
 
             } catch (Exception e) {
                 Log.e("ScanFragment", "Ошибка при запуске камеры", e);
-                Toast.makeText(getContext(), "Не удалось запустить камеру: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Не удалось запустить камеру: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }, ContextCompat.getMainExecutor(requireContext()));
     }
@@ -183,7 +224,10 @@ public class ScanFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        if (cameraExecutor != null) {
+        if (cameraProvider != null) {
+            cameraProvider.unbindAll();
+        }
+        if (cameraExecutor != null && !cameraExecutor.isShutdown()) {
             cameraExecutor.shutdown();
         }
         binding = null;

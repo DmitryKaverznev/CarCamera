@@ -14,7 +14,7 @@ import androidx.navigation.Navigation;
 import com.dkaverznev.carcamera.R;
 import com.dkaverznev.carcamera.databinding.FragmentBeginBinding;
 
-public class BeginFragment extends Fragment {
+public class InputFragment extends Fragment {
 
     private FragmentBeginBinding binding;
     private NavController navController;
@@ -39,13 +39,7 @@ public class BeginFragment extends Fragment {
     }
 
     private void initUI() {
-        binding.buttonGoLogin.setOnClickListener(v -> {
-            navController.navigate(R.id.action_beginFragment_to_loginFragment);
-        });
-
-        binding.buttonGoRegister.setOnClickListener(v -> {
-            navController.navigate(R.id.action_beginFragment_to_registerFragment);
-        });
+        // TODO
     }
 
     private void setupObservers() {

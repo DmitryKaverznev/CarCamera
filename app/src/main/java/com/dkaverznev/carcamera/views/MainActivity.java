@@ -8,13 +8,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-// import androidx.navigation.ui.NavigationUI; // Больше не нужен для setupActionBarWithNavController
-// import androidx.appcompat.widget.Toolbar; // Больше не нужен
 
 import com.dkaverznev.carcamera.R;
+import com.dkaverznev.carcamera.data.AuthRepository; // Импортируем AuthRepository
 import com.dkaverznev.carcamera.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,9 +37,22 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        AuthRepository authRepository = new AuthRepository(getApplication());
+
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
+
+            NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.nav_graph);
+
+            if (authRepository.isUserLoggedIn()) {
+                navGraph.setStartDestination(R.id.homeFragment);
+            } else {
+                navGraph.setStartDestination(R.id.beginFragment);
+            }
+
+            navController.setGraph(navGraph);
+
             appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         }
     }

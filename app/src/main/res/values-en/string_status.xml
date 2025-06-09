@@ -1,0 +1,8 @@
+<resources>
+    <string name="scan_status_success">Access granted</string>
+    <string name="scan_status_block">Access Denied</string>
+    <string name="scan_status_warning">Access is restricted</string>
+    <string name="scan_status_not_found">Vehicle not found</string>
+    <string name="scan_status_unknown">Unknown</string>
+
+</resources>

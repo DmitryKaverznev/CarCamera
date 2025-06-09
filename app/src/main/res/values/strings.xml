@@ -16,11 +16,6 @@
     <string name="text_title_home">Главная</string>
     <string name="text_licensePlate">Номер машины</string>
     <string name="text_shortInfo">Краткая информация</string>
-    <!-- Preference Titles -->
-
-    <!-- Messages Preferences -->
-
-    <!-- Sync Preferences -->
     <string name="button_description_manualinput">Ручной ввод</string>
     <string name="text_permission_camera">Не предоставлено разрешение камеры</string>
     <string name="text_scanning_in_progress">Сканирование...</string>
@@ -29,4 +24,12 @@
     <string name="rus" translatable="false">RUS</string>
     <string name="image_description_flag">Флаг РФ</string>
     <string name="text_vehicle_not_found">Номер не найден</string>
+    <string name="text_data_not_found">Информация не найдена</string>
+    <string name="button_description_arrowForward">Далее</string>
+    <string name="text_note_title">Примичание</string>
+    <string name="text_note" >Контент примечания</string>
+    <string name="text_info_title">Информация</string>
+    <string name="text_info">Контент информации</string>
+    <string name="button_logout">Выйти</string>
+    <string name="image_status_icon">Иконка статуса</string>
 </resources>

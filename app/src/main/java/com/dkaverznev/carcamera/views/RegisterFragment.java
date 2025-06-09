@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,8 +43,6 @@ public class RegisterFragment extends Fragment {
     }
 
     private void initUI() {
-        binding.buttonSettings.setOnClickListener(v->
-                navController.navigate(R.id.action_homeFragment_to_settingsFragment));
 
         binding.buttonBack.setOnClickListener(v ->
                 navController.navigateUp());
@@ -68,9 +65,13 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        mViewModel.errorMessage.observe(getViewLifecycleOwner(), message -> {
-            if (message != null && !message.isEmpty()) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        mViewModel.errorMessage.observe(getViewLifecycleOwner(), messageText -> {
+            if (messageText != null && !messageText.isEmpty()) {
+                binding.cardError.setVisibility(View.VISIBLE);
+                binding.textError.setText(messageText);
+            } else {
+                binding.cardError.setVisibility(View.GONE);
+                binding.textError.setText("");
             }
         });
     }

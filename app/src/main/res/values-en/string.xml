@@ -23,4 +23,5 @@
     <string name="button_description_refresh">Continue scanning</string>
     <string name="image_description_flag">RUS Flag</string>
     <string name="text_vehicle_not_found">Plate License not found</string>
+    <string name="button_description_arrowForward">Forward</string>
 </resources>

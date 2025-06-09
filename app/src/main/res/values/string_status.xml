@@ -1,0 +1,7 @@
+<resources>
+    <string name="scan_status_success">Доступ разрешён</string>
+    <string name="scan_status_block">Доступ запрещён</string>
+    <string name="scan_status_warning">Доступ ограничен</string>
+    <string name="scan_status_not_found">ТС не найдено</string>
+    <string name="scan_status_unknown">Неизвестно</string>
+</resources>

@@ -1,0 +1,30 @@
+<resources>
+    <string name="error_empty_credentials">Имя пользователя или пароль пусты</string>
+
+    <string name="error_unknown">Неизвестная ошибка. Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_generic">Произошла ошибка. Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_unknown_generic">Произошла неизвестная ошибка. Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_unknown_with_code">Произошла неизвестная ошибка (%1$s). Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_missing_credentials">Пароль или имя пользователя не заданы. Введите их.</string>
+
+    <string name="error_email_already_in_use">Этот адрес электронной почты уже используется.</string>
+    <string name="error_invalid_email">Неверный формат адреса электронной почты.</string>
+    <string name="error_wrong_password">Неверный пароль. Пожалуйста, проверьте и повторите попытку.</string>
+    <string name="error_user_not_found">Пользователь с таким адресом электронной почты не найден.</string>
+    <string name="error_user_disabled">Этот аккаунт был отключен.</string>
+    <string name="error_too_many_requests">Слишком много попыток входа. Пожалуйста, попробуйте позже.</string>
+    <string name="error_operation_not_allowed">Вход с использованием электронной почты и пароля не включен.</string>
+    <string name="error_weak_password">Пароль слишком слабый</string>
+    <string name="error_invalid_credential">Неверные учетные данные.</string>
+    <string name="error_account_exists_with_different_credential">Аккаунт уже существует с другими учетными данными.</string>
+    <string name="error_requires_recent_login">Для выполнения этого действия требуется повторная аутентификация.</string>
+    <string name="error_provider_already_linked">Этот метод входа уже связан с другим аккаунтом.</string>
+    <string name="error_no_such_provider">Указанный провайдер аутентификации не существует.</string>
+    <string name="error_network_request_failed">Ошибка сети</string>
+    <string name="error_user_token_expired">Срок действия токена пользователя истек. Пожалуйста, войдите снова.</string>
+    <string name="error_invalid_api_key">Неверный ключ API. Проверьте конфигурацию Firebase.</string>
+    <string name="error_user_mismatch">Несоответствие пользователя. Вы пытаетесь выполнить действие для другого пользователя.</string>
+    <string name="error_credential_already_in_use">Эти учетные данные уже используются другим аккаунтом.</string>
+    <string name="error_internal_error">Произошла внутренняя ошибка сервера. Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_passwords_not_matching">Пароли не совпадают</string>
+</resources>

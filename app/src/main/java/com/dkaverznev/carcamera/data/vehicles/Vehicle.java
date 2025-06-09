@@ -1,39 +1,67 @@
 package com.dkaverznev.carcamera.data.vehicles;
 
-import androidx.annotation.NonNull;
+import com.dkaverznev.carcamera.data.scans.ScanStatus;
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.PropertyName;
 
 import java.util.Map;
 
 public class Vehicle {
     public String note;
-    public String status;
+    // Это поле будет использоваться для хранения статуса как строки в Firebase.
+    @PropertyName("status") // Это имя поля в базе данных Firestore
+    public String firebaseStatus; // Переименовано для ясности
+
     public Map<String, String> info;
 
     public Vehicle() {
+        // Пустой конструктор необходим для Firebase Firestore
     }
 
-    public Vehicle(String note, String status, Map<String, String> info) {
+    public Vehicle(String note, String firebaseStatus, Map<String, String> info) {
         this.note = note;
-        this.status = status;
+        this.firebaseStatus = firebaseStatus;
         this.info = info;
     }
 
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
     public Map<String, String> getInfo() { return info; }
     public void setInfo(Map<String, String> info) { this.info = info; }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "note='" + (note != null ? note : "null") + '\'' +
-                ", status='" + (status != null ? status : "null") + '\'' +
-                ", info=" + (info != null ? info.toString() : "null") +
-                '}';
+
+    @PropertyName("status")
+    public String getFirebaseStatus() {
+        return firebaseStatus;
+    }
+
+    @PropertyName("status")
+    public void setFirebaseStatus(String firebaseStatus) {
+        this.firebaseStatus = firebaseStatus;
+    }
+
+    @Exclude
+    public ScanStatus getScanStatus() {
+        ScanStatus.ScanStatusEnum enumStatus;
+        if (firebaseStatus == null) {
+            enumStatus = ScanStatus.ScanStatusEnum.NOT_FOUND;
+        } else {
+            switch (firebaseStatus) {
+                case "allowed":
+                    enumStatus = ScanStatus.ScanStatusEnum.SUCCESS;
+                    break;
+                case "block":
+                    enumStatus = ScanStatus.ScanStatusEnum.BLOCK;
+                    break;
+                case "warning":
+                    enumStatus = ScanStatus.ScanStatusEnum.WARNING;
+                    break;
+                default:
+                    enumStatus = ScanStatus.ScanStatusEnum.NOT_FOUND;
+                    break;
+            }
+        }
+        return new ScanStatus(enumStatus);
     }
 }

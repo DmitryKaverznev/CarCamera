@@ -85,20 +85,34 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <ImageButton
-        android:id="@+id/button_settings"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_error"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:padding="12dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/button_description_setting"
-        android:src="@drawable/ic_settings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/md_theme_error"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:contentPadding="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/card_register"
+        app:layout_constraintStart_toStartOf="@+id/card_register"
+        app:layout_constraintTop_toBottomOf="@+id/card_register"
+        tools:visibility="gone" >
+
+        <TextView
+            android:id="@+id/text_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:breakStrategy="balanced"
+            android:gravity="center"
+            android:hyphenationFrequency="none"
+            android:padding="8dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:text="Неверный логин или пароль. Пожалуйста, попробуйте еще раз" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <ImageButton
         android:id="@+id/button_back"

@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.dkaverznev.carcamera.R;
 import com.dkaverznev.carcamera.data.AuthRepository;
 
 import java.util.Objects;
@@ -17,13 +18,11 @@ public class RegisterViewModel extends AndroidViewModel {
     private final AuthRepository authRepository;
 
     public LiveData<Boolean> registerSuccess;
-    public LiveData<String> errorMessage;
-
-    private final MutableLiveData<Boolean> _inputError = new MutableLiveData<>();
+    public MutableLiveData<String> errorMessage;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-        authRepository = new AuthRepository();
+        authRepository = new AuthRepository(application);
 
         registerSuccess = Transformations.map(authRepository.firebaseUser, Objects::nonNull);
 
@@ -32,17 +31,16 @@ public class RegisterViewModel extends AndroidViewModel {
 
     public void register(String email, String password, String confirmPassword) {
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            _inputError.setValue(true);
-
+            errorMessage.postValue(getApplication().getString(R.string.error_empty_credentials));
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            _inputError.setValue(true);
+            errorMessage.postValue(getApplication().getString(R.string.error_passwords_not_matching));
             return;
         }
 
-        _inputError.setValue(false);
+        errorMessage.postValue(null);
         authRepository.registerUser(email, password);
     }
 }

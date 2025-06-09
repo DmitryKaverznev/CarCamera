@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green_status">#4CAF50</color>
+    <color name="green_status_alpha90">#E54CAF50</color>
+    <color name="green_status_alpha30">#4D4CAF50</color>
+
+    <color name="yellow_status">#FFC107</color>
+    <color name="yellow_status_alpha90">#E6FFC107</color>
+    <color name="yellow_status_alpha30">#4DFFC107</color>
+
+    <color name="orange_status">#FF8C00</color>
+    <color name="orange_status_alpha90">#E6FF8C00</color>
+    <color name="orange_status_alpha30">#4DFF8C00</color>
+
+    <color name="red_status">#F44336</color>
+    <color name="red_status_alpha90">#E5F44336</color>
+    <color name="red_status_alpha30">#4CF44336</color>
+</resources>

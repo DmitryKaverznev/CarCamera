@@ -38,7 +38,7 @@
         android:id="@+id/recycler_view_scan_history"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
         tools:listitem="@layout/item_scan_history" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_manualInput"
+        android:id="@+id/fab_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -56,7 +56,7 @@
         android:focusable="true"
         android:contentDescription="@string/button_description_manualinput"
         app:fabSize="mini"
-        app:srcCompat="@drawable/ic_dialpad"
+        app:srcCompat="@drawable/ic_refresh"
         app:layout_constraintBottom_toTopOf="@+id/fab_scan"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -69,6 +69,7 @@
         android:clickable="true"
         android:focusable="true"
         android:contentDescription="@string/button_description_scan"
+        app:fabSize="normal"
         app:srcCompat="@drawable/ic_focus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

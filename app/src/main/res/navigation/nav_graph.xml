@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/beginFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/beginFragment"
@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_beginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_beginFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
     </fragment>
 
 
@@ -31,9 +28,6 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -50,9 +44,6 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_registerFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
             android:id="@+id/action_registerFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
@@ -62,6 +53,9 @@
         android:name="com.dkaverznev.carcamera.views.SettingFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_beginFragment"
+            app:destination="@id/beginFragment" />
     </fragment>
 
     <fragment
@@ -100,9 +94,6 @@
             android:name="vehicles_license"
             app:argType="string"
             app:nullable="false" />
-        <action
-            android:id="@+id/action_resultFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
 
     </fragment>
 

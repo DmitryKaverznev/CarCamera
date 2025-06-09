@@ -49,6 +49,7 @@ public class SettingFragment extends Fragment {
 
         binding.buttonLogout.setOnClickListener(v -> {
             mViewModel.logOut();
+            navController.navigate(R.id.beginFragment);
         });
     }
 

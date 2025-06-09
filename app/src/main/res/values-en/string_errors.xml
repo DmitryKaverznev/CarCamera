@@ -1,0 +1,31 @@
+<resources>
+    <string name="error_empty_credentials">Username or password is empty</string>
+
+    <string name="error_unknown">Unknown error. Please try again.</string>
+    <string name="error_generic">An error occurred. Please try again.</string>
+    <string name="error_unknown_generic">An unknown error occurred. Please try again.</string>
+    <string name="error_unknown_with_code">An unknown error (%1$s) occurred. Please try again.</string>
+    <string name="error_missing_credentials">Password or username not specified. Please enter them.</string>
+
+    <string name="error_email_already_in_use">This email address is already in use.</string>
+    <string name="error_invalid_email">Invalid email address format.</string>
+    <string name="error_wrong_password">Incorrect password. Please check and try again.</string>
+    <string name="error_user_not_found">User with this email address not found.</string>
+    <string name="error_user_disabled">This account has been disabled.</string>
+    <string name="error_too_many_requests">Too many sign-in attempts. Please try again later.</string>
+    <string name="error_operation_not_allowed">Email and password sign-in is not enabled.</string>
+    <string name="error_weak_password">Password is too weak</string>
+    <string name="error_invalid_credential">Invalid credentials.</string>
+    <string name="error_account_exists_with_different_credential">An account already exists with different credentials.</string>
+    <string name="error_requires_recent_login">This action requires recent authentication.</string>
+    <string name="error_provider_already_linked">This sign-in method is already linked to another account.</string>
+    <string name="error_no_such_provider">The specified authentication provider does not exist.</string>
+    <string name="error_network_request_failed">Network error</string>
+    <string name="error_user_token_expired">User token has expired. Please sign in again.</string>
+    <string name="error_invalid_api_key">Invalid API key. Please check your Firebase configuration.</string>
+    <string name="error_user_mismatch">User mismatch. You are trying to perform an action for a different user.</string>
+    <string name="error_credential_already_in_use">These credentials are already in use by another account.</string>
+    <string name="error_internal_error">An internal server error occurred. Please try again.</string>
+    <string name="error_passwords_not_matching">The passwords do not match</string>
+
+</resources>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,29 +46,34 @@ public class LoginFragment extends Fragment {
         binding.buttonBack.setOnClickListener(v ->
                 navController.navigateUp());
 
-        binding.buttonSettings.setOnClickListener(v->
-                navController.navigate(R.id.action_homeFragment_to_settingsFragment));
-
         binding.buttonLogin.setOnClickListener(v -> {
             String userName = binding.editTextEmail.getText().toString();
             String password = binding.editTextPassword.getText().toString();
+            binding.cardError.setVisibility(View.GONE);
             mViewModel.login(userName, password);
         });
 
-        binding.textViewRegister.setOnClickListener(v ->
-                navController.navigate(R.id.action_loginFragment_to_registerFragment));
+        binding.textViewRegister.setOnClickListener(v -> {
+            binding.cardError.setVisibility(View.GONE);
+            navController.navigate(R.id.action_loginFragment_to_registerFragment);
+        });
     }
 
     private void setupObservers() {
         mViewModel.loginSuccess.observe(getViewLifecycleOwner(), success -> {
             if (success) {
+                binding.cardError.setVisibility(View.GONE);
                 navController.navigate(R.id.action_loginFragment_to_homeFragment);
             }
         });
 
-        mViewModel.errorMessage.observe(getViewLifecycleOwner(), message -> {
-            if (message != null && !message.isEmpty()) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        mViewModel.errorMessage.observe(getViewLifecycleOwner(), messageText -> {
+            if (messageText != null && !messageText.isEmpty()) {
+                binding.cardError.setVisibility(View.VISIBLE);
+                binding.textError.setText(messageText);
+            } else {
+                binding.cardError.setVisibility(View.GONE);
+                binding.textError.setText("");
             }
         });
     }
