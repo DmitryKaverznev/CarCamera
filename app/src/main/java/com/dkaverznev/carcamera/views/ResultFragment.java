@@ -1,7 +1,6 @@
 package com.dkaverznev.carcamera.views;
 
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -18,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.dkaverznev.carcamera.R;
 import com.dkaverznev.carcamera.data.scans.Scan;
 import com.dkaverznev.carcamera.data.scans.ScanStatus;
+import com.dkaverznev.carcamera.data.vehicles.ResultTypeEnum;
 import com.dkaverznev.carcamera.databinding.FragmentResultBinding;
 import com.dkaverznev.carcamera.utils.LicensePlateStringUtils;
 import com.dkaverznev.carcamera.utils.ResultIconsUtils;
@@ -33,6 +33,7 @@ public class ResultFragment extends Fragment {
     private FragmentResultBinding binding;
     private NavController navController;
     private String currentLicensePlate;
+    private ResultTypeEnum currentType;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -56,13 +57,13 @@ public class ResultFragment extends Fragment {
     private void initUI() {
         ResultFragmentArgs args = ResultFragmentArgs.fromBundle(getArguments());
         currentLicensePlate = args.getVehiclesLicense();
+        currentType = args.getType();
 
         binding.fabRefresh.setOnClickListener(v ->
                 navController.navigateUp());
 
         setLicensePlateText(currentLicensePlate);
-
-        Log.e("ResultFragment", "License Plate: " + currentLicensePlate);
+        binding.textInfoType.setText(currentType.toStringView(getContext()));
 
         mViewModel.getVehicleDataByNumber(currentLicensePlate);
         mViewModel.getLatestScan(currentLicensePlate);
@@ -83,14 +84,20 @@ public class ResultFragment extends Fragment {
                 displayVehicleInfo(vehicle);
 
 
-                Scan newScan = new Scan(vehicle.getScanStatus(), Timestamp.now());
+                Scan newScan = new Scan(
+                        vehicle.getScanStatus(),
+                        Timestamp.now(),
+                        currentType.toStringFirebase());
                 newScan.setVehicleLicense(currentLicensePlate);
                 mViewModel.addScanRecord(newScan);
 
             } else {
                 hideContent();
 
-                Scan newScan = new Scan(new ScanStatus(ScanStatus.ScanStatusEnum.NOT_FOUND), Timestamp.now());
+                Scan newScan = new Scan(
+                        new ScanStatus(ScanStatus.ScanStatusEnum.NOT_FOUND),
+                        Timestamp.now(),
+                        currentType.toStringFirebase());
                 newScan.setVehicleLicense(currentLicensePlate);
                 mViewModel.addScanRecord(newScan);
             }

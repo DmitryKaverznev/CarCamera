@@ -19,11 +19,13 @@ public class AuthRepository {
     public final MutableLiveData<String> authErrorMessage = new MutableLiveData<>();
     private final Context applicationContext;
 
-    // Конструктор теперь принимает Application
     public AuthRepository(Application application) {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser.setValue(firebaseAuth.getCurrentUser());
         this.applicationContext = application.getApplicationContext();
+        firebaseAuth.addAuthStateListener(firebaseAuth -> {
+            firebaseUser.setValue(firebaseAuth.getCurrentUser());
+        });
     }
 
     public void registerUser(String email, String password) {
@@ -66,7 +68,6 @@ public class AuthRepository {
 
     public void logoutUser() {
         firebaseAuth.signOut();
-        firebaseUser.setValue(null);
     }
 
     private void handleAuthError(Exception exception) {

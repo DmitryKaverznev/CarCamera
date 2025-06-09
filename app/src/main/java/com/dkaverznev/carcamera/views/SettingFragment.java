@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.dkaverznev.carcamera.R; // Убедитесь, что у вас есть R файл
+import com.dkaverznev.carcamera.R;
 import com.dkaverznev.carcamera.databinding.FragmentSettingsBinding;
 import com.dkaverznev.carcamera.viewmodel.SettingViewModel;
 
@@ -51,19 +51,39 @@ public class SettingFragment extends Fragment {
             mViewModel.logOut();
             navController.navigate(R.id.beginFragment);
         });
+
+        binding.buttonDelete.setOnClickListener(v -> {
+            mViewModel.deleteData();
+        });
     }
 
     private void setupObservers() {
         mViewModel.logoutSuccess.observe(getViewLifecycleOwner(), success -> {
             if (success != null && success) {
-                Toast.makeText(getContext(), "Вы успешно вышли из аккаунта.", Toast.LENGTH_SHORT).show();
                 navController.navigate(R.id.loginFragment);
             }
         });
 
-        mViewModel.errorMessage.observe(getViewLifecycleOwner(), message -> {
+        mViewModel.errorMessageAuth.observe(getViewLifecycleOwner(), message -> {
             if (message != null) {
-                Toast.makeText(getContext(), "Ошибка выхода: " + message, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Ошибка: " + message, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        mViewModel.firebaseUser.observe(getViewLifecycleOwner(), firebaseUser -> {
+            if (firebaseUser != null) {
+                binding.textViewUserEmail.setText(firebaseUser.getEmail());
+            }
+        });
+
+        mViewModel.deleteSuccess.observe(getViewLifecycleOwner(), success -> {
+            if (success != null) {
+                if (success) {
+                    Toast.makeText(getContext(), "Все данные успешно удалены", Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.loginFragment);
+                } else {
+                    Toast.makeText(getContext(), "Не удалось полностью удалить аккаунт и данные", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

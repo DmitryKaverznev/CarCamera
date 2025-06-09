@@ -8,14 +8,12 @@ import java.util.Map;
 
 public class Vehicle {
     public String note;
-    // Это поле будет использоваться для хранения статуса как строки в Firebase.
-    @PropertyName("status") // Это имя поля в базе данных Firestore
-    public String firebaseStatus; // Переименовано для ясности
+    @PropertyName("status")
+    public String firebaseStatus;
 
     public Map<String, String> info;
 
     public Vehicle() {
-        // Пустой конструктор необходим для Firebase Firestore
     }
 
     public Vehicle(String note, String firebaseStatus, Map<String, String> info) {

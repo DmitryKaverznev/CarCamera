@@ -47,30 +47,16 @@ public class CameraRepository {
             return;
         }
 
-        Log.d(LOG_TAG, "Запуск распознавания текста в ScanRepository.");
         _scannedText.postValue(null); // Сбрасываем предыдущий результат, так как начинаем новую обработку.
 
         textRecognizer.process(image)
                 .addOnSuccessListener(text -> { // попытка распознавания успешна
                     String rawScannedText = text.getText();
-                    Log.d(LOG_TAG, "Необработанный текст" + rawScannedText);
-
                     String processedText = LicensePlateStringUtils.convert(rawScannedText); // обработка текста в LicensePlateStringUtils
-                    Log.d(LOG_TAG, "Обработанный текст: " + processedText);
-
                     String foundLicensePlate = LicensePlateStringUtils.findLicensePlate(processedText); // поиск автомобильного номера РФ
-
-                    if (foundLicensePlate != null) {
-                        _scannedText.postValue(foundLicensePlate);
-                        Log.d(LOG_TAG, "Автомобильный номер: " + foundLicensePlate);
-                    } else {
-                        _scannedText.postValue(null);
-                        Log.d(LOG_TAG, "Номер не найден");
-                    }
-
+                    _scannedText.postValue(foundLicensePlate);
                     imageProxy.close();
-                    Log.d(LOG_TAG, "ImageProxy закрыт");
-                    isProcessingImage.set(false); // Снимаем флаг, разрешая обработку следующего кадра.
+                    isProcessingImage.set(false);
                 })
                 .addOnFailureListener(e -> {
                     _scanErrorMessage.postValue(Objects.requireNonNull(e.getMessage()));

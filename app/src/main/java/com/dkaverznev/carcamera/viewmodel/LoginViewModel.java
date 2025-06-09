@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import com.dkaverznev.carcamera.data.AuthRepository;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -15,14 +16,14 @@ public class LoginViewModel extends AndroidViewModel {
 
     private final AuthRepository authRepository;
 
-    public LiveData<Boolean> loginSuccess;
+    public MutableLiveData<FirebaseUser> loginSuccess;
     public MutableLiveData<String> errorMessage;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
         authRepository = new AuthRepository(application);
 
-        loginSuccess = Transformations.map(authRepository.firebaseUser, Objects::nonNull);
+        loginSuccess = authRepository.firebaseUser;
         errorMessage = authRepository.authErrorMessage;
     }
 

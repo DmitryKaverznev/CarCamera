@@ -25,11 +25,14 @@
     <string name="image_description_flag">Флаг РФ</string>
     <string name="text_vehicle_not_found">Номер не найден</string>
     <string name="text_data_not_found">Информация не найдена</string>
-    <string name="button_description_arrowForward">Далее</string>
+    <string name="button_description_arrowForward">Въезд</string>
     <string name="text_note_title">Примичание</string>
     <string name="text_note" >Контент примечания</string>
     <string name="text_info_title">Информация</string>
     <string name="text_info">Контент информации</string>
     <string name="button_logout">Выйти</string>
     <string name="image_status_icon">Иконка статуса</string>
+    <string name="button_description_retake">Заново</string>
+    <string name="button_description_arrowForward_back">Выезд</string>
+    <string name="button_delete">Удалить данные</string>
 </resources>

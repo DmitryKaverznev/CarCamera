@@ -94,6 +94,10 @@
             android:name="vehicles_license"
             app:argType="string"
             app:nullable="false" />
+        <argument
+            android:name="type"
+            app:argType="com.dkaverznev.carcamera.data.vehicles.ResultTypeEnum"
+            app:nullable="false" />
 
     </fragment>
 

@@ -21,30 +21,28 @@ public class ResultViewModel extends AndroidViewModel {
     public LiveData<Vehicle> vehicleData;
     public LiveData<String> databaseErrorMessage;
     public LiveData<String> scanErrorMessage;
-    public LiveData<Scan> scanData; // Оставляем, так как будем запрашивать последний скан
+    public LiveData<Scan> scanData;
 
     public ResultViewModel(@NonNull Application application) {
         super(application);
-        dataVehiclesRepository = new DataVehiclesRepository(); // Конструктор без аргументов
+        dataVehiclesRepository = new DataVehiclesRepository();
         dataScansRepository = new DataScansRepository();
 
         authErrorMessage = dataVehiclesRepository.authErrorMessage;
         vehicleData = dataVehiclesRepository.vehicleData;
         databaseErrorMessage = dataVehiclesRepository.databaseErrorMessage;
         scanErrorMessage = dataScansRepository.errorMessage;
-        scanData = dataScansRepository.scanData; // Используем публичный LiveData из репозитория
+        scanData = dataScansRepository.scanData;
     }
 
     public void getVehicleDataByNumber(String vehicleLicense) {
         dataVehiclesRepository.getVehicleDataByNumber(vehicleLicense);
     }
 
-    // Метод для добавления записи сканирования
     public void addScanRecord(Scan scan) {
         dataScansRepository.addScan(scan);
     }
 
-    // Метод для получения последнего скана (если нужно отображать его)
     public void getLatestScan(String vehicleLicense) {
         dataScansRepository.getScan(vehicleLicense);
     }

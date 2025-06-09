@@ -1,4 +1,3 @@
-// ScanFragment.java
 package com.dkaverznev.carcamera.views;
 
 import android.os.Bundle;
@@ -27,6 +26,7 @@ import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 
+import com.dkaverznev.carcamera.data.vehicles.ResultTypeEnum;
 import com.dkaverznev.carcamera.utils.PermissionUtils;
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -51,6 +51,7 @@ public class ScanFragment extends Fragment {
     private Preview preview;
     private ImageAnalysis imageAnalysis;
 
+    private String recognizedLicensePlate = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -92,18 +93,47 @@ public class ScanFragment extends Fragment {
 
     private void initUI() {
         binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
+        // Скрываем FABs при инициализации UI
+        binding.fabRetake.setVisibility(View.GONE);
+        binding.fabNext.setVisibility(View.GONE);
+        binding.fabNextBack.setVisibility(View.GONE);
 
         binding.buttonBack.setOnClickListener(v->
                 navController.navigateUp());
 
-        binding.fabScan.setOnClickListener(v -> {
+        binding.fabRetake.setOnClickListener(v -> {
             binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
-            binding.fabScan.setVisibility(View.GONE);
+            binding.fabRetake.setVisibility(View.GONE);
+            binding.fabNext.setVisibility(View.GONE);
+            binding.fabNextBack.setVisibility(View.GONE);
             binding.errorTextView.setText("");
+            recognizedLicensePlate = null;
             if (cameraProvider != null) {
                 cameraProvider.unbindAll();
             }
             startCamera();
+        });
+
+        binding.fabNext.setOnClickListener(v -> {
+            if (recognizedLicensePlate != null && !recognizedLicensePlate.isEmpty()) {
+                ScanFragmentDirections.ActionScanFragmentToResultFragment action =
+                        ScanFragmentDirections.actionScanFragmentToResultFragment(recognizedLicensePlate, ResultTypeEnum.FORWARD);
+                navController.navigate(action);
+
+                mViewModel.clearScannedText();
+                recognizedLicensePlate = null;
+            }
+        });
+
+        binding.fabNextBack.setOnClickListener(v -> {
+            if (recognizedLicensePlate != null && !recognizedLicensePlate.isEmpty()) {
+                ScanFragmentDirections.ActionScanFragmentToResultFragment action =
+                        ScanFragmentDirections.actionScanFragmentToResultFragment(recognizedLicensePlate, ResultTypeEnum.BACK);
+                navController.navigate(action);
+
+                mViewModel.clearScannedText();
+                recognizedLicensePlate = null;
+            }
         });
     }
 
@@ -113,22 +143,22 @@ public class ScanFragment extends Fragment {
                 binding.scannedTextView.setText(text);
                 binding.errorTextView.setText("");
 
-                binding.fabScan.setVisibility(View.VISIBLE);
-
-                ScanFragmentDirections.ActionScanFragmentToResultFragment action =
-                        ScanFragmentDirections.actionScanFragmentToResultFragment(text);
-                navController.navigate(action);
-
-                mViewModel.clearScannedText();
-
+                recognizedLicensePlate = text;
+                binding.fabNext.setVisibility(View.VISIBLE);
+                binding.fabRetake.setVisibility(View.VISIBLE);
+                binding.fabNextBack.setVisibility(View.VISIBLE);
 
                 if (cameraProvider != null) {
-                    cameraProvider.unbind(imageAnalysis);
+                    cameraProvider.unbind(imageAnalysis, preview);
+                    Log.d("ScanFragment", "ImageAnalysis и Preview отвязаны. Камера остановлена.");
                 }
 
             } else {
                 binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
-                binding.fabScan.setVisibility(View.GONE);
+                binding.fabRetake.setVisibility(View.GONE);
+                binding.fabNext.setVisibility(View.GONE);
+                binding.fabNextBack.setVisibility(View.GONE);
+                recognizedLicensePlate = null;
             }
         });
 
@@ -137,7 +167,10 @@ public class ScanFragment extends Fragment {
                 binding.errorTextView.setText(errorMessage);
                 binding.scannedTextView.setText(getString(R.string.text_scanning_in_progress));
                 Toast.makeText(getContext(), "Ошибка: " + errorMessage, Toast.LENGTH_LONG).show();
-                binding.fabScan.setVisibility(View.GONE);
+                binding.fabRetake.setVisibility(View.VISIBLE);
+                binding.fabNext.setVisibility(View.GONE);
+                binding.fabNextBack.setVisibility(View.GONE);
+                recognizedLicensePlate = null;
             } else {
                 binding.errorTextView.setText("");
             }
@@ -147,12 +180,16 @@ public class ScanFragment extends Fragment {
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
 
+        binding.fabRetake.setVisibility(View.GONE);
+        binding.fabNext.setVisibility(View.GONE);
+        binding.fabNextBack.setVisibility(View.GONE);
+
         cameraProviderFuture.addListener(() -> {
             try {
                 this.cameraProvider = cameraProviderFuture.get();
 
                 if (binding == null) {
-                    Log.w("ScanFragment", "Binding is null, fragment view probably destroyed. Cannot start camera.");
+                    Log.w("ScanFragment", "Cannot start camera.");
                     return;
                 }
 
@@ -170,8 +207,7 @@ public class ScanFragment extends Fragment {
                     @OptIn(markerClass = ExperimentalGetImage.class)
                     @Override
                     public void analyze(@NonNull ImageProxy imageProxy) {
-
-                        if (mViewModel.scannedText.getValue() != null && !mViewModel.scannedText.getValue().isEmpty()) {
+                        if (recognizedLicensePlate != null && !recognizedLicensePlate.isEmpty()) {
                             imageProxy.close();
                             return;
                         }
@@ -200,6 +236,7 @@ public class ScanFragment extends Fragment {
                         preview,
                         imageAnalysis
                 );
+                Log.d("ScanFragment", "Камера привязана: Preview и ImageAnalysis активны.");
 
             } catch (Exception e) {
                 Log.e("ScanFragment", "Ошибка при запуске камеры", e);

@@ -11,15 +11,18 @@ public class Scan {
 
     private ScanStatus status;
     private Timestamp time;
+    private String type;
 
     public Scan() {
         this.status = new ScanStatus(ScanStatus.ScanStatusEnum.NOT_FOUND);
         this.time = Timestamp.now();
+        this.type = null;
     }
 
-    public Scan(ScanStatus status, Timestamp time) {
+    public Scan(ScanStatus status, Timestamp time, String type) {
         this.status = status;
         this.time = time;
+        this.type = type;
     }
 
     public String getVehicleLicense() {
@@ -58,13 +61,10 @@ public class Scan {
         this.status = new ScanStatus(enumStatus);
     }
 
-
     @Exclude
     public ScanStatus getStatus() {
         return status;
     }
-
-
 
     public int getStatusDescriptionResId() {
         if (status != null) {
@@ -78,4 +78,15 @@ public class Scan {
         return time;
     }
 
+    // Геттер для type
+    @PropertyName("type")
+    public String getType() {
+        return type;
+    }
+
+    // Сеттер для type
+    @PropertyName("type")
+    public void setType(String type) {
+        this.type = type;
+    }
 }
